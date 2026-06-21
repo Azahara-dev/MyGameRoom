@@ -1,5 +1,9 @@
 package com.azaharadev.mygameroom.data.model
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+
 object MockData {
     val games: List<Game> = listOf(
         Game(
