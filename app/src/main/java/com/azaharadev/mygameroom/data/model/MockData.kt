@@ -7,8 +7,8 @@ object MockData {
             platforms = listOf(Platform.PC, Platform.PS5, Platform.XBOX),
             title = "Cyberpunk 2077",
             developer = "CD Projekt Red",
-            mark = 4.6,
-            isFavourite = false,
+            mark = 2.0,
+            isFavourite = true,
             isTendency = true
         ),
         Game(
