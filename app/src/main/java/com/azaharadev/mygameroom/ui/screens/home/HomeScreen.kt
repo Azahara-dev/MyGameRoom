@@ -1,16 +1,111 @@
 package com.azaharadev.mygameroom.ui.screens.home
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Whatshot
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.azaharadev.mygameroom.data.model.MockData
+import com.azaharadev.mygameroom.ui.components.GameCard
+import com.azaharadev.mygameroom.ui.components.SearchBar
+import com.azaharadev.mygameroom.ui.theme.AccentOrange
+import com.azaharadev.mygameroom.ui.theme.AccentPrimary
+import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.TextPrimary
 
 @Composable
 fun HomeScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Pantalla Home", color = TextPrimary)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp)
+    ) {
+        SearchBar(
+            value = "",
+            onValueChange = {},
+            onNotificationClick = {}
+        )
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier
+                .padding(vertical = 12.dp)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "¿Que juego me empiezo hoy?",
+                color = TextPrimary,
+                style = MaterialTheme.typography.titleLarge
+            )
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                MockData.games.take(3).forEach { game ->
+                    TodayGameCard(game = game, onClick = { })
+                }
+            }
+        }
+
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Icon(
+                        imageVector = Icons.Filled.Whatshot,
+                        contentDescription = null,
+                        tint = AccentOrange
+                    )
+
+                    Text(
+                        text = "Tendencias",
+                        color = TextPrimary,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
+
+                /*Text(
+                    text = "Ver todo",
+                    color = AccentPrimary,
+                    style = MaterialTheme.typography.bodyMedium
+                )*/
+            }
+
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                MockData.games.filter { it.isTendency }.take(10).forEach { game ->
+                    GameCard(
+                        game = game,
+                        onFavoriteClick = {},
+                        onCardClick = {}
+                    )
+                }
+
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    MyGameRoomTheme {
+        HomeScreen()
     }
 }

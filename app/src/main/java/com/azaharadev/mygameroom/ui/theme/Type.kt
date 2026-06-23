@@ -8,6 +8,11 @@ import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 val GameRoomTypography = Typography(
+    titleLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp
+    ),
     titleMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,

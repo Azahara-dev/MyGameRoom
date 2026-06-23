@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.azaharadev.mygameroom.data.model.Game
 import com.azaharadev.mygameroom.data.model.MockData
+import com.azaharadev.mygameroom.ui.theme.AccentOrange
 import com.azaharadev.mygameroom.ui.theme.FavoritePink
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.StarGold
@@ -61,15 +62,34 @@ fun GameCard(
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.height(IntrinsicSize.Min)) {
-            AsyncImage(
-                model = game.image,
-                contentDescription = game.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(110.dp)
-                    .clip(RoundedCornerShape(8.dp))
-            )
+
+            Box() {
+                AsyncImage(
+                    model = game.image,
+                    contentDescription = game.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(80.dp)
+                        .height(110.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+
+                if (game.isTendency) {
+                    Box(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(AccentOrange)
+                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = "TENDENCIA",
+                            color = TextPrimary,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                }
+            }
 
             Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxHeight()) {
 
