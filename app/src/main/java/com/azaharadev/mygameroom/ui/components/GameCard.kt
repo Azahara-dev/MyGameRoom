@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.HeartBroken
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Icon
@@ -34,9 +33,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.azaharadev.mygameroom.data.model.Game
 import com.azaharadev.mygameroom.data.model.MockData
+import com.azaharadev.mygameroom.ui.theme.FavoritePink
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.StarGold
-import com.azaharadev.mygameroom.ui.theme.FavoritePink
 import com.azaharadev.mygameroom.ui.theme.SurfaceDark
 import com.azaharadev.mygameroom.ui.theme.TextPrimary
 import com.azaharadev.mygameroom.ui.theme.TextSecondary

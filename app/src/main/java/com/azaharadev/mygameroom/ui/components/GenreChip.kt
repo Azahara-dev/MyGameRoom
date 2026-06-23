@@ -1,6 +1,5 @@
 package com.azaharadev.mygameroom.ui.components
 
-import android.provider.MediaStore
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.azaharadev.mygameroom.data.model.Platform
 import com.azaharadev.mygameroom.ui.theme.AccentPrimary
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.SurfaceDark
