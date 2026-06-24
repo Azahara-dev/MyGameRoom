@@ -22,7 +22,7 @@ import com.azaharadev.mygameroom.ui.theme.TextSecondary
 import com.azaharadev.mygameroom.viewmodel.GamesViewModel
 
 @Composable
-fun FavoritesScreen(gamesViewModel: GamesViewModel = viewModel()) {
+fun FavoritesScreen(gamesViewModel: GamesViewModel) {
 
     val favoriteGames = gamesViewModel.games.filter { it.isFavourite }
 

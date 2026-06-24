@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.azaharadev.mygameroom.navigation.BottomNavBar
 import com.azaharadev.mygameroom.navigation.NavGraph
 import com.azaharadev.mygameroom.navigation.Routes
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
+import com.azaharadev.mygameroom.viewmodel.GamesViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +26,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyGameRoomTheme {
+                val gamesViewModel: GamesViewModel = viewModel()
                 val navController = rememberNavController()
                 val currentRoute =
                     navController.currentBackStackEntryAsState().value?.destination?.route
@@ -42,6 +45,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavGraph(
                         navController = navController,
+                        gamesViewModel = gamesViewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

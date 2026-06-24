@@ -28,7 +28,7 @@ import com.azaharadev.mygameroom.viewmodel.GamesViewModel
 
 @Composable
 fun HomeScreen(
-    gamesViewModel: GamesViewModel = viewModel(),
+    gamesViewModel: GamesViewModel,
     onNavigateToExplore: () -> Unit
 ) {
     Column(

@@ -21,20 +21,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.azaharadev.mygameroom.data.model.Genre
-import com.azaharadev.mygameroom.data.model.MockData
 import com.azaharadev.mygameroom.ui.components.GameCard
 import com.azaharadev.mygameroom.ui.components.GenreChip
 import com.azaharadev.mygameroom.ui.components.SearchBar
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.TextSecondary
+import com.azaharadev.mygameroom.viewmodel.GamesViewModel
 
 @Composable
-fun ExploreScreen() {
+fun ExploreScreen(gamesViewModel: GamesViewModel) {
     var searchText by remember { mutableStateOf("") }
     var selectedGenre by remember { mutableStateOf<Genre?>(null) }
 
-    val filteredGames = MockData.games.filter { game ->
+    val filteredGames = gamesViewModel.games.filter { game ->
         val matchesSearch = game.title.contains(searchText, ignoreCase = true)
         val matchesGenre = selectedGenre == null || game.genres.contains(selectedGenre)
         matchesSearch && matchesGenre
@@ -46,7 +47,6 @@ fun ExploreScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // SearchBar, GenreChips, contador, lista de GameCard — todo usando filteredGames
         SearchBar(
             value = searchText,
             onValueChange = { searchText = it }
@@ -105,7 +105,7 @@ fun ExploreScreen() {
             items(filteredGames) { game ->
                 GameCard(
                     game = game,
-                    onFavoriteClick = {},
+                    onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },
                     onCardClick = {}
                 )
             }
@@ -118,6 +118,6 @@ fun ExploreScreen() {
 @Composable
 fun ExploreScreenPreview() {
     MyGameRoomTheme {
-        ExploreScreen()
+        ExploreScreen(viewModel())
     }
 }
