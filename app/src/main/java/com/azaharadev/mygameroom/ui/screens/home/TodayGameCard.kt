@@ -29,7 +29,7 @@ import com.azaharadev.mygameroom.ui.theme.TextPrimary
 fun TodayGameCard(game: Game, onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .width(110.dp)
+            .width(100.dp)
             .height(140.dp)
             .clip(RoundedCornerShape(20.dp))
             .clickable{ onClick() },

@@ -4,6 +4,10 @@ enum class Platform {
     PC, PS5, XBOX, SWITCH2
 }
 
+enum class Genre {
+    ACCION, RPG, DEPORTES, ESTRATEGIA
+}
+
 data class Game(
     val image: String,
     val platforms: List<Platform>,
@@ -11,5 +15,6 @@ data class Game(
     val developer: String,
     val mark: Double,
     val isFavourite: Boolean,
-    val isTendency: Boolean
+    val isTendency: Boolean,
+    val genres: List<Genre>
 )

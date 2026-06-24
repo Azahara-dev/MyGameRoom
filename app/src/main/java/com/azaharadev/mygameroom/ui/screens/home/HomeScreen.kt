@@ -42,7 +42,7 @@ fun HomeScreen() {
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
                 .padding(vertical = 12.dp)
                 .fillMaxWidth()
