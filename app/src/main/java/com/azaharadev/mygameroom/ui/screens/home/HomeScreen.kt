@@ -18,16 +18,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.azaharadev.mygameroom.data.model.MockData
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.azaharadev.mygameroom.ui.components.GameCard
 import com.azaharadev.mygameroom.ui.components.SearchBar
 import com.azaharadev.mygameroom.ui.theme.AccentOrange
-import com.azaharadev.mygameroom.ui.theme.AccentPrimary
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.TextPrimary
+import com.azaharadev.mygameroom.viewmodel.GamesViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    gamesViewModel: GamesViewModel = viewModel(),
+    onNavigateToExplore: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,7 +40,9 @@ fun HomeScreen() {
         SearchBar(
             value = "",
             onValueChange = {},
-            onNotificationClick = {}
+            onNotificationClick = {},
+            readOnly = true,
+            onClick = onNavigateToExplore
         )
 
         Column(
@@ -54,7 +59,7 @@ fun HomeScreen() {
             )
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                MockData.games.take(3).forEach { game ->
+                gamesViewModel.games.take(3).forEach { game ->
                     TodayGameCard(game = game, onClick = { })
                 }
             }
@@ -89,10 +94,10 @@ fun HomeScreen() {
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                MockData.games.filter { it.isTendency }.take(10).forEach { game ->
+                gamesViewModel.games.filter { it.isTendency }.take(10).forEach { game ->
                     GameCard(
                         game = game,
-                        onFavoriteClick = {},
+                        onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },
                         onCardClick = {}
                     )
                 }
@@ -106,6 +111,6 @@ fun HomeScreen() {
 @Composable
 fun HomeScreenPreview() {
     MyGameRoomTheme {
-        HomeScreen()
+        HomeScreen(viewModel(),{})
     }
 }

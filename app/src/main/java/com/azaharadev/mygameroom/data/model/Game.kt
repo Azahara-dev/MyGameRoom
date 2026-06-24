@@ -9,6 +9,7 @@ enum class Genre {
 }
 
 data class Game(
+    val id: Int,
     val image: String,
     val platforms: List<Platform>,
     val title: String,
