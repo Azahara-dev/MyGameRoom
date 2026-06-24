@@ -1,4 +1,4 @@
-package com.azaharadev.mygameroom.ui.screens.profile
+package com.azaharadev.mygameroom.ui.screens.favorites
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

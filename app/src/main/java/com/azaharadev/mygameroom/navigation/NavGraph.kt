@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.azaharadev.mygameroom.ui.screens.explore.ExploreScreen
 import com.azaharadev.mygameroom.ui.screens.home.HomeScreen
-import com.azaharadev.mygameroom.ui.screens.profile.ProfileScreen
+import com.azaharadev.mygameroom.ui.screens.favorites.ProfileScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -18,6 +18,6 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     ) {
         composable(Routes.HOME) { HomeScreen() }
         composable(Routes.EXPLORE) { ExploreScreen() }
-        composable(Routes.PROFILE) { ProfileScreen() }
+        composable(Routes.FAVORITES) { ProfileScreen() }
     }
 }

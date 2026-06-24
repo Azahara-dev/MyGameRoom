@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
@@ -60,10 +61,10 @@ fun BottomNavBar(
             onClick = { onNavigate(Routes.EXPLORE) })
 
         BottomNavItem(
-            icon = Icons.Filled.Person,
-            isSelected = currentRoute == Routes.PROFILE,
-            title = "Perfil",
-            onClick = { onNavigate(Routes.PROFILE) })
+            icon = Icons.Filled.Favorite,
+            isSelected = currentRoute == Routes.FAVORITES,
+            title = "Favoritos",
+            onClick = { onNavigate(Routes.FAVORITES) })
     }
 
 }
