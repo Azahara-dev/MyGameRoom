@@ -17,7 +17,7 @@ fun NavGraph(navController: NavHostController, gamesViewModel: GamesViewModel, m
         startDestination = Routes.HOME,
         modifier = modifier
     ) {
-        composable(Routes.HOME) { HomeScreen(onNavigateToExplore = { navController.navigate(Routes.EXPLORE) }, gamesViewModel = gamesViewModel) }
+        composable(Routes.HOME) { HomeScreen(gamesViewModel = gamesViewModel) }
         composable(Routes.EXPLORE) { ExploreScreen(gamesViewModel = gamesViewModel) }
         composable(Routes.FAVORITES) { FavoritesScreen(gamesViewModel = gamesViewModel) }
     }

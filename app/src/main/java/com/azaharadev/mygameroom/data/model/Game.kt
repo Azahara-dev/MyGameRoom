@@ -5,7 +5,29 @@ enum class Platform {
 }
 
 enum class Genre {
-    ACCION, RPG, DEPORTES, ESTRATEGIA
+    POINT_AND_CLICK,
+    FIGHTING,
+    SHOOTER,
+    MUSIC,
+    PLATFORM,
+    PUZZLE,
+    RACING,
+    RTS,
+    RPG,
+    SIMULATOR,
+    SPORT,
+    STRATEGY,
+    TBS,
+    TACTICAL,
+    HACK_AND_SLASH,
+    QUIZ_TRIVIA,
+    PINBALL,
+    ADVENTURE,
+    INDIE,
+    ARCADE,
+    VISUAL_NOVEL,
+    CARD_AND_BOARD_GAME,
+    MOBA
 }
 
 data class Game(

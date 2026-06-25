@@ -11,7 +11,7 @@ object MockData {
             mark = 2.0,
             isFavourite = true,
             isTendency = true,
-            genres = listOf(Genre.RPG, Genre.ACCION)
+            genres = listOf(Genre.RPG, Genre.POINT_AND_CLICK)
         ),
         Game(
             id = 2,
@@ -22,7 +22,7 @@ object MockData {
             mark = 4.9,
             isFavourite = false,
             isTendency = true,
-            genres = listOf(Genre.RPG, Genre.ACCION)
+            genres = listOf(Genre.RPG, Genre.RPG)
         ),
         Game(
             id = 3,
@@ -33,7 +33,7 @@ object MockData {
             mark = 4.8,
             isFavourite = true,
             isTendency = false,
-            genres = listOf(Genre.ACCION)
+            genres = listOf(Genre.INDIE)
         ),
         Game(
             id = 4,
@@ -45,7 +45,7 @@ object MockData {
             mark = 4.9,
             isFavourite = false,
             isTendency = false,
-            genres = listOf(Genre.RPG, Genre.ESTRATEGIA)
+            genres = listOf(Genre.RPG, Genre.ADVENTURE)
         ),
         Game(
             id = 5,
@@ -56,7 +56,7 @@ object MockData {
             mark = 4.0,
             isFavourite = false,
             isTendency = false,
-            genres = listOf(Genre.DEPORTES)
+            genres = listOf(Genre.CARD_AND_BOARD_GAME)
         )
     )
 }

@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.azaharadev.mygameroom.ui.components.GameCard
-import com.azaharadev.mygameroom.ui.components.SearchBar
 import com.azaharadev.mygameroom.ui.theme.AccentOrange
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.TextPrimary
@@ -28,8 +27,7 @@ import com.azaharadev.mygameroom.viewmodel.GamesViewModel
 
 @Composable
 fun HomeScreen(
-    gamesViewModel: GamesViewModel,
-    onNavigateToExplore: () -> Unit
+    gamesViewModel: GamesViewModel
 ) {
     Column(
         modifier = Modifier
@@ -37,14 +35,6 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        SearchBar(
-            value = "",
-            onValueChange = {},
-            onNotificationClick = {},
-            readOnly = true,
-            onClick = onNavigateToExplore
-        )
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -111,6 +101,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     MyGameRoomTheme {
-        HomeScreen(viewModel(),{})
+        HomeScreen(viewModel())
     }
 }

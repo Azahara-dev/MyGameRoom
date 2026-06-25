@@ -32,9 +32,7 @@ import com.azaharadev.mygameroom.ui.theme.TextSecondary
 fun SearchBar(
     value: String,
     onValueChange: (String) -> Unit,
-    onNotificationClick: (() -> Unit)? = null,
-    readOnly: Boolean = false,
-    onClick: (() -> Unit)? = null
+    onNotificationClick: (() -> Unit)? = null
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -42,7 +40,6 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
-            .let {if (onClick != null) it.clickable {onClick()} else it}
     ) {
         Box(
             modifier = Modifier
@@ -79,12 +76,10 @@ fun SearchBar(
                         value = value,
                         onValueChange = onValueChange,
                         textStyle = MaterialTheme.typography.bodyMedium.copy(color = TextPrimary),
-                        singleLine = true,
-                        readOnly = readOnly
+                        singleLine = true
                     )
                 }
             }
-
         }
 
         if (onNotificationClick != null) {
