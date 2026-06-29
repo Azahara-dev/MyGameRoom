@@ -22,7 +22,7 @@ class GamesRepository {
     suspend fun fetchGames(): List<Game> {
         val token = getAccessToken()
 
-        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where rating != null & cover != null; sort rating desc; fulimit 50;"
+        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where rating != null & cover != null; sort rating desc; limit 50;"
         val requestBody = queryText.toRequestBody("text/plain".toMediaType())
 
         val gameDtos = RetrofitClient.igdbApi.getGames(

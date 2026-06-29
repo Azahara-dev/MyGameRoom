@@ -19,6 +19,7 @@ import com.azaharadev.mygameroom.navigation.NavGraph
 import com.azaharadev.mygameroom.navigation.Routes
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.viewmodel.GamesViewModel
+import com.azaharadev.mygameroom.viewmodel.GamesViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +27,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyGameRoomTheme {
-                val gamesViewModel: GamesViewModel = viewModel()
+                val gamesViewModel: GamesViewModel = viewModel(
+                    factory = GamesViewModelFactory(application)
+                )
                 val navController = rememberNavController()
                 val currentRoute =
                     navController.currentBackStackEntryAsState().value?.destination?.route
