@@ -36,11 +36,34 @@ fun SearchBar(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        Icon(
+            imageVector = Icons.Filled.Search,
+            contentDescription = null,
+            tint = TextSecondary
+        )
+
+        Box(modifier = Modifier.fillMaxWidth()) {
+            if (value.isEmpty()) {
+                Text(
+                    text = "Buscar juegos, géneros...",
+                    color = TextSecondary,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            BasicTextField(
+                value = value,
+                onValueChange = onValueChange,
+                textStyle = MaterialTheme.typography.bodyMedium.copy(color = TextPrimary),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+
+    if (onNotificationClick != null) {
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
@@ -50,60 +73,18 @@ fun SearchBar(
                     color = Color.White.copy(alpha = 0.15f),
                     shape = RoundedCornerShape(10.dp)
                 )
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .weight(1f)
+                .padding(horizontal = 8.dp, vertical = 8.dp)
+                .clickable { onNotificationClick() }
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = null,
-                    tint = TextSecondary
-                )
-
-                Box {
-                    if (value.isEmpty()) {
-                        Text(
-                            text = "Buscar juegos, géneros...",
-                            color = TextSecondary,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-
-                    BasicTextField(
-                        value = value,
-                        onValueChange = onValueChange,
-                        textStyle = MaterialTheme.typography.bodyMedium.copy(color = TextPrimary),
-                        singleLine = true
-                    )
-                }
-            }
-        }
-
-        if (onNotificationClick != null) {
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(SurfaceDark)
-                    .border(
-                        width = 1.dp,
-                        color = Color.White.copy(alpha = 0.15f),
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .padding(horizontal = 8.dp, vertical = 8.dp)
-                    .clickable { onNotificationClick() }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.NotificationsNone,
-                    contentDescription = null,
-                    tint = TextSecondary
-                )
-            }
+            Icon(
+                imageVector = Icons.Filled.NotificationsNone,
+                contentDescription = null,
+                tint = TextSecondary
+            )
         }
     }
 }
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

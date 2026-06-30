@@ -22,7 +22,8 @@ class GamesRepository {
     suspend fun fetchGames(): List<Game> {
         val token = getAccessToken()
 
-        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where rating != null & cover != null; sort rating desc; limit 50;"
+        val queryText =
+            "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where rating != null & cover != null; sort rating desc; limit 50;"
         val requestBody = queryText.toRequestBody("text/plain".toMediaType())
 
         val gameDtos = RetrofitClient.igdbApi.getGames(
@@ -37,7 +38,8 @@ class GamesRepository {
     suspend fun searchGames(query: String): List<Game> {
         val token = getAccessToken()
 
-        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; search \"$query\"; limit 30;"
+        val queryText =
+            "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where name ~ *\"$query\"*; limit 100;"
         val requestBody = queryText.toRequestBody("text/plain".toMediaType())
 
         val gameDtos = RetrofitClient.igdbApi.getGames(
@@ -46,7 +48,17 @@ class GamesRepository {
             query = requestBody
         )
 
-        return gameDtos.map { it.toGame() }
+        val games = gameDtos.map { it.toGame() }
+
+        return games.sortedWith(
+            compareBy<Game> { game ->
+                when {
+                    game.title.equals(query, ignoreCase = true) -> 0
+                    game.title.startsWith(query, ignoreCase = true) -> 1
+                    else -> 2
+                }
+            }.thenByDescending { it.mark }
+        ).take(30)
     }
 
     private fun mapToPlatform(name: String): Platform? {
@@ -119,7 +131,8 @@ class GamesRepository {
         val token = getAccessToken()
 
         val idsText = ids.joinToString(",")
-        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where id = ($idsText); limit ${ids.size};"
+        val queryText =
+            "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where id = ($idsText); limit ${ids.size};"
         val requestBody = queryText.toRequestBody("text/plain".toMediaType())
 
         val gameDtos = RetrofitClient.igdbApi.getGames(
