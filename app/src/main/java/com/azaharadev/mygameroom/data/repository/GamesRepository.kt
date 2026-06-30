@@ -34,6 +34,21 @@ class GamesRepository {
         return gameDtos.map { it.toGame() }
     }
 
+    suspend fun searchGames(query: String): List<Game> {
+        val token = getAccessToken()
+
+        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; search \"$query\"; limit 30;"
+        val requestBody = queryText.toRequestBody("text/plain".toMediaType())
+
+        val gameDtos = RetrofitClient.igdbApi.getGames(
+            clientId = BuildConfig.IGDB_CLIENT_ID,
+            authorization = "Bearer $token",
+            query = requestBody
+        )
+
+        return gameDtos.map { it.toGame() }
+    }
+
     private fun mapToPlatform(name: String): Platform? {
         return when {
             name.contains("PC") -> Platform.PC
@@ -96,5 +111,23 @@ class GamesRepository {
             isFavourite = false,
             isTendency = false
         )
+    }
+
+    suspend fun getGamesByIds(ids: List<Int>): List<Game> {
+        if (ids.isEmpty()) return emptyList()
+
+        val token = getAccessToken()
+
+        val idsText = ids.joinToString(",")
+        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where id = ($idsText); limit ${ids.size};"
+        val requestBody = queryText.toRequestBody("text/plain".toMediaType())
+
+        val gameDtos = RetrofitClient.igdbApi.getGames(
+            clientId = BuildConfig.IGDB_CLIENT_ID,
+            authorization = "Bearer $token",
+            query = requestBody
+        )
+
+        return gameDtos.map { it.toGame() }
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,16 +30,23 @@ import com.azaharadev.mygameroom.ui.components.SearchBar
 import com.azaharadev.mygameroom.ui.theme.MyGameRoomTheme
 import com.azaharadev.mygameroom.ui.theme.TextSecondary
 import com.azaharadev.mygameroom.viewmodel.GamesViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun ExploreScreen(gamesViewModel: GamesViewModel) {
     var searchText by remember { mutableStateOf("") }
     var selectedGenre by remember { mutableStateOf<Genre?>(null) }
 
-    val filteredGames = gamesViewModel.games.filter { game ->
-        val matchesSearch = game.title.contains(searchText, ignoreCase = true)
+    val sourceList = gamesViewModel.searchResults ?: gamesViewModel.games
+
+    val filteredGames = sourceList.filter { game ->
         val matchesGenre = selectedGenre == null || game.genres.contains(selectedGenre)
-        matchesSearch && matchesGenre
+        matchesGenre
+    }
+
+    LaunchedEffect(searchText) {
+        delay(200)
+        gamesViewModel.search(searchText)
     }
 
     Column(
