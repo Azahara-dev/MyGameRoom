@@ -7,7 +7,8 @@ data class GameDto(
     val genres: List<NamedReferenceDto>?,
     val platforms: List<NamedReferenceDto>?,
     val involved_companies: List<InvolvedCompanyDto>?,
-    val rating: Double?
+    val rating: Double?,
+    val hypes: Int?
 )
 
 data class  CoverDto(

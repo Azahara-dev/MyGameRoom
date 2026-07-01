@@ -84,7 +84,7 @@ fun HomeScreen(
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                gamesViewModel.games.filter { it.isTendency }.take(10).forEach { game ->
+                gamesViewModel.trendingGames.take(20).forEach { game ->
                     GameCard(
                         game = game,
                         onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },

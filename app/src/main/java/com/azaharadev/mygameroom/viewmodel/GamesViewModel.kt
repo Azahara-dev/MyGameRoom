@@ -27,6 +27,9 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
     var games by mutableStateOf<List<Game>>(emptyList())
         private set
 
+    var trendingGames by mutableStateOf<List<Game>>(emptyList())
+        private set
+
     init {
         loadGames()
     }
@@ -39,7 +42,10 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
     private fun loadGames() {
         viewModelScope.launch {
             val fetchedGames = gamesRepository.fetchGames()
+            val fetchedTrending = gamesRepository.fetchTrendingGames()
+
             games = applyFavoriteStatus(fetchedGames)
+            trendingGames = applyFavoriteStatus(fetchedTrending)
         }
     }
     fun toggleFavorite(gameId: Int) {
