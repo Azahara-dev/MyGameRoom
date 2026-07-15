@@ -4,6 +4,7 @@ import com.azaharadev.mygameroom.BuildConfig
 import com.azaharadev.mygameroom.data.model.Game
 import com.azaharadev.mygameroom.data.model.Genre
 import com.azaharadev.mygameroom.data.model.Platform
+import com.azaharadev.mygameroom.data.model.igdbId
 import com.azaharadev.mygameroom.data.network.GameDto
 import com.azaharadev.mygameroom.data.network.RetrofitClient
 import okhttp3.MediaType.Companion.toMediaType
@@ -110,6 +111,7 @@ class GamesRepository {
                 ?: "",
             platforms = this.platforms
                 ?.mapNotNull { mapToPlatform(it.name) }
+                ?.distinct()
                 ?: emptyList(),
             genres = this.genres
                 ?.mapNotNull { mapToGenre(it.name) }
@@ -148,6 +150,23 @@ class GamesRepository {
         val token = getAccessToken()
 
         val queryText = "fields id,name,rating,hypes,genres.name,platforms.name,cover.url,involved_companies.company.name; where hypes != null & cover != null; sort hypes desc; limit 20;"
+        val requestBody = queryText.toRequestBody("text/plain".toMediaType())
+
+        val gameDtos = RetrofitClient.igdbApi.getGames(
+            clientId = BuildConfig.IGDB_CLIENT_ID,
+            authorization = "Bearer $token",
+            query = requestBody
+        )
+
+        return gameDtos.map { it.toGame() }
+    }
+
+    suspend fun getGamesByGenre(genre: Genre): List<Game> {
+
+        val token = getAccessToken()
+
+        val genreId = genre.igdbId()
+        val queryText = "fields id,name,rating,genres.name,platforms.name,cover.url,involved_companies.company.name; where genres = ($genreId); sort rating desc; limit 50;"
         val requestBody = queryText.toRequestBody("text/plain".toMediaType())
 
         val gameDtos = RetrofitClient.igdbApi.getGames(

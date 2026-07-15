@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.azaharadev.mygameroom.data.local.AppDatabase
 import com.azaharadev.mygameroom.data.model.Game
+import com.azaharadev.mygameroom.data.model.Genre
 import com.azaharadev.mygameroom.data.repository.FavoritesRepository
 import com.azaharadev.mygameroom.data.repository.GamesRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,6 +31,12 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
     var trendingGames by mutableStateOf<List<Game>>(emptyList())
         private set
 
+    var isLoading by mutableStateOf(true)
+        private set
+
+    var isFilterLoading by mutableStateOf(false)
+        private set
+
     init {
         loadGames()
     }
@@ -41,17 +48,21 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun loadGames() {
         viewModelScope.launch {
+            isLoading= true
             val fetchedGames = gamesRepository.fetchGames()
             val fetchedTrending = gamesRepository.fetchTrendingGames()
 
             games = applyFavoriteStatus(fetchedGames)
             trendingGames = applyFavoriteStatus(fetchedTrending)
+            isLoading = false
         }
     }
+
     fun toggleFavorite(gameId: Int) {
         viewModelScope.launch {
             val game = games.find { it.id == gameId }
                 ?: searchResults?.find { it.id == gameId }
+                ?: trendingGames.find { it.id == gameId }
                 ?: return@launch
 
             if (game.isFavourite) {
@@ -65,6 +76,10 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             searchResults = searchResults?.map {
+                if (it.id == gameId) it.copy(isFavourite = !it.isFavourite) else it
+            }
+
+            trendingGames = trendingGames.map {
                 if (it.id == gameId) it.copy(isFavourite = !it.isFavourite) else it
             }
         }
@@ -84,7 +99,20 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
     val favoriteGamesFlow: Flow<List<Game>> = favoritesRepository.getFavoriteIdsFlow()
         .flatMapLatest { ids ->
             flow {
-                emit(gamesRepository.getGamesByIds(ids.toList()))
+                val games = gamesRepository.getGamesByIds(ids.toList())
+                emit(applyFavoriteStatus(games))
             }
         }
+
+    fun filterByGenre(genre: Genre?) {
+        viewModelScope.launch {
+            isFilterLoading = true
+            games = if (genre == null) {
+                applyFavoriteStatus(gamesRepository.fetchGames())
+            } else {
+                applyFavoriteStatus(gamesRepository.getGamesByGenre(genre))
+            }
+            isFilterLoading = false
+        }
+    }
 }

@@ -1,5 +1,10 @@
 package com.azaharadev.mygameroom.ui.screens.explore
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,10 +25,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.azaharadev.mygameroom.data.model.Genre
+import com.azaharadev.mygameroom.data.model.displayName
 import com.azaharadev.mygameroom.ui.components.GameCard
 import com.azaharadev.mygameroom.ui.components.GenreChip
 import com.azaharadev.mygameroom.ui.components.SearchBar
@@ -39,9 +46,8 @@ fun ExploreScreen(gamesViewModel: GamesViewModel) {
 
     val sourceList = gamesViewModel.searchResults ?: gamesViewModel.games
 
-    val filteredGames = sourceList.filter { game ->
-        val matchesGenre = selectedGenre == null || game.genres.contains(selectedGenre)
-        matchesGenre
+    val filteredGames = (gamesViewModel.searchResults ?: gamesViewModel.games).filter { game ->
+        searchText.isEmpty() || game.title.contains(searchText, ignoreCase = true)
     }
 
     LaunchedEffect(searchText) {
@@ -67,13 +73,19 @@ fun ExploreScreen(gamesViewModel: GamesViewModel) {
             GenreChip(
                 "Todos",
                 isSelected = (selectedGenre == null),
-                onClick = { selectedGenre = null }
+                onClick = {
+                    selectedGenre = null
+                    gamesViewModel.filterByGenre(null)
+                }
             )
             Genre.entries.forEach { genre ->
                 GenreChip(
-                    genre.name,
+                    genre.displayName(),
                     isSelected = (selectedGenre == genre),
-                    onClick = { selectedGenre = genre }
+                    onClick = {
+                        selectedGenre = genre
+                        gamesViewModel.filterByGenre(genre)
+                    }
                 )
             }
         }
@@ -106,16 +118,27 @@ fun ExploreScreen(gamesViewModel: GamesViewModel) {
             }
         }
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.weight(1f)
-        ) {
-            items(filteredGames) { game ->
-                GameCard(
-                    game = game,
-                    onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },
-                    onCardClick = {}
-                )
+        AnimatedContent (
+            targetState = filteredGames,
+            label = "games_transition",
+            transitionSpec = {
+                fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
+            },
+            modifier = Modifier
+                .weight(1f)
+                .alpha(if (gamesViewModel.isFilterLoading) 0.3f else 1f)
+        ) { games ->
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                items(games) { game ->
+                    GameCard(
+                        game = game,
+                        onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },
+                        onCardClick = {}
+                    )
+                }
             }
         }
     }
