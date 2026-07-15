@@ -37,7 +37,14 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
     var isFilterLoading by mutableStateOf(false)
         private set
 
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
+
     init {
+        loadGames()
+    }
+
+    fun retry() {
         loadGames()
     }
 
@@ -49,12 +56,18 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
     private fun loadGames() {
         viewModelScope.launch {
             isLoading= true
-            val fetchedGames = gamesRepository.fetchGames()
-            val fetchedTrending = gamesRepository.fetchTrendingGames()
+            errorMessage = null
+            try {
+                val fetchedGames = gamesRepository.fetchGames()
+                val fetchedTrending = gamesRepository.fetchTrendingGames()
 
-            games = applyFavoriteStatus(fetchedGames)
-            trendingGames = applyFavoriteStatus(fetchedTrending)
-            isLoading = false
+                games = applyFavoriteStatus(fetchedGames)
+                trendingGames = applyFavoriteStatus(fetchedTrending)
+            } catch (e: Exception){
+                errorMessage = "No se pudo cargar el contenido. Comprueba tu conexión e inténtalo de nuevo."
+            } finally {
+                isLoading = false
+            }
         }
     }
 
