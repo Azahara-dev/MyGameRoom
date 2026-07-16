@@ -13,13 +13,13 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.azaharadev.mygameroom"
+    namespace = "com.kodarisu.mygameroom"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.azaharadev.mygameroom"
+        applicationId = "com.kodarisu.mygameroom"
         minSdk = 28
         targetSdk = 36
         versionCode = 1
