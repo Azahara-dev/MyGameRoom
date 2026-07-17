@@ -118,27 +118,18 @@ fun ExploreScreen(gamesViewModel: GamesViewModel) {
             }
         }
 
-        AnimatedContent (
-            targetState = filteredGames,
-            label = "games_transition",
-            transitionSpec = {
-                fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(300))
-            },
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .weight(1f)
                 .alpha(if (gamesViewModel.isFilterLoading) 0.3f else 1f)
-        ) { games ->
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.weight(1f)
-            ) {
-                items(games) { game ->
-                    GameCard(
-                        game = game,
-                        onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },
-                        onCardClick = {}
-                    )
-                }
+        ) {
+            items(filteredGames, key = { it.id }) { game ->
+                GameCard(
+                    game = game,
+                    onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },
+                    onCardClick = {}
+                )
             }
         }
     }

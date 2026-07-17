@@ -65,9 +65,11 @@ fun FavoritesScreen(gamesViewModel: GamesViewModel) {
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.weight(1f)
                 ) {
-                    items(favoriteGames!!) { game ->
+                    items(favoriteGames!!, key = { it.id }) { game ->
                         GameCard(
-                            game = game,
+                            game = game.copy(
+                                isFavourite = !gamesViewModel.removingFavoriteIds.contains(game.id)
+                            ),
                             onFavoriteClick = { gamesViewModel.toggleFavorite(game.id) },
                             onCardClick = {}
                         )

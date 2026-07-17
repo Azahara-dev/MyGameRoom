@@ -12,6 +12,7 @@ import com.kodarisu.mygameroom.data.model.Genre
 import com.kodarisu.mygameroom.data.repository.FavoritesRepository
 import com.kodarisu.mygameroom.data.repository.GamesRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -38,6 +39,9 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
         private set
 
     var errorMessage by mutableStateOf<String?>(null)
+        private set
+
+    var removingFavoriteIds by mutableStateOf<Set<Int>>(emptySet())
         private set
 
     init {
@@ -79,6 +83,7 @@ class GamesViewModel(application: Application) : AndroidViewModel(application) {
                 ?: return@launch
 
             if (game.isFavourite) {
+                removingFavoriteIds = removingFavoriteIds + gameId
                 favoritesRepository.removeFavorite(gameId)
             } else {
                 favoritesRepository.addFavorite(gameId)
