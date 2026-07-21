@@ -12,7 +12,6 @@ import com.kodarisu.mygameroom.data.model.Genre
 import com.kodarisu.mygameroom.data.repository.FavoritesRepository
 import com.kodarisu.mygameroom.data.repository.GamesRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow

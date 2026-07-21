@@ -1,10 +1,5 @@
 package com.kodarisu.mygameroom.ui.screens.explore
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,7 +39,6 @@ fun ExploreScreen(gamesViewModel: GamesViewModel) {
     var searchText by remember { mutableStateOf("") }
     var selectedGenre by remember { mutableStateOf<Genre?>(null) }
 
-    val sourceList = gamesViewModel.searchResults ?: gamesViewModel.games
 
     val filteredGames = (gamesViewModel.searchResults ?: gamesViewModel.games).filter { game ->
         searchText.isEmpty() || game.title.contains(searchText, ignoreCase = true)
