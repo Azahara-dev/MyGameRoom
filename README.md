@@ -97,10 +97,12 @@ De esta forma, determinados datos pueden mantenerse disponibles localmente sin d
 
 ## 📸 Capturas de pantalla
 
-![Pantalla principal](screenshots/inicio.png)
-![Explorar](screenshots/explorar.png)
-![Explorar con filtro](screenshots/explorar_filtro.png)
-![Favoritos](screenshots/favoritos.png)
+<p align="center">
+  <img src="screenshots/home.png" width="220">
+  <img src="screenshots/explore.png" width="220">
+  <img src="screenshots/detail.png" width="220">
+  <img src="screenshots/favorites.png" width="220">
+</p>
 
 ## 🚀 Instalación
 
