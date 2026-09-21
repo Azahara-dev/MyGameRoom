@@ -98,10 +98,10 @@ De esta forma, determinados datos pueden mantenerse disponibles localmente sin d
 ## 📸 Capturas de pantalla
 
 <p align="center">
-  <img src="screenshots/home.png" width="220">
-  <img src="screenshots/explore.png" width="220">
-  <img src="screenshots/detail.png" width="220">
-  <img src="screenshots/favorites.png" width="220">
+  <img src="screenshots/inicio.png" width="220">
+  <img src="screenshots/explorar.png" width="220">
+  <img src="screenshots/explorar_filtro.png" width="220">
+  <img src="screenshots/favoritos.png" width="220">
 </p>
 
 ## 🚀 Instalación
